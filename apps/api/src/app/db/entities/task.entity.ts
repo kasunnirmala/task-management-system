@@ -8,38 +8,42 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { OrganizationEntity } from './organization.entity';
-import { RoleEntity } from './role.entity';
+import { UserEntity } from './user.entity';
 
-@Entity('users')
-export class UserEntity {
+@Entity('tasks')
+export class TaskEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 255 })
-  email: string;
+  title: string;
 
   @Column({ length: 255 })
-  password: string;
+  description: string;
 
   @Column({ length: 255 })
-  firstName: string;
+  category: string;
 
-  @Column({ length: 255 })
-  lastName: string;
+  @Column()
+  isCompleted: boolean;
 
-  @OneToOne(() => RoleEntity)
-  @JoinColumn()
-  role: RoleEntity;
+  @Column()
+  completedAt?: Date;
 
   @OneToOne(() => OrganizationEntity)
   @JoinColumn()
   organization?: OrganizationEntity;
 
-  isActive: boolean;
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  assignedTo: UserEntity;
+
+  @OneToOne(() => UserEntity)
+  @JoinColumn()
+  createdBy: UserEntity;
 
   @CreateDateColumn()
   createdAt: Date;
-
   @UpdateDateColumn()
   updatedAt: Date;
 }

@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import {
-    AuthenticatedUserDto,
-    ROLE_PERMISSIONS,
-    User,
+  AuthenticatedUserDto
 } from '@task-mgmt-sys/data';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
@@ -13,15 +11,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'YOUR_SECRET_KEY',
+      secretOrKey: process.env['JWT_SECRET_KEY'] || 'secret',
     });
   }
 
-  async validate(payload: User): Promise<AuthenticatedUserDto> {
-    return {
-      ...payload,
-      permissions:
-        ROLE_PERMISSIONS[payload.role as keyof typeof ROLE_PERMISSIONS] || [],
-    };
+  async validate(payload: AuthenticatedUserDto): Promise<AuthenticatedUserDto> {
+    return payload;
   }
 }

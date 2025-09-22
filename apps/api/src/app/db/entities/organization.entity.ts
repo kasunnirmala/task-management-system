@@ -7,39 +7,27 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OrganizationEntity } from './organization.entity';
-import { RoleEntity } from './role.entity';
 
-@Entity('users')
-export class UserEntity {
+@Entity('organizations')
+export class OrganizationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 255 })
-  email: string;
+  name: string;
 
   @Column({ length: 255 })
-  password: string;
-
-  @Column({ length: 255 })
-  firstName: string;
-
-  @Column({ length: 255 })
-  lastName: string;
-
-  @OneToOne(() => RoleEntity)
-  @JoinColumn()
-  role: RoleEntity;
+  description: string;
 
   @OneToOne(() => OrganizationEntity)
   @JoinColumn()
-  organization?: OrganizationEntity;
+  parent?: OrganizationEntity;
 
+  @Column()
   isActive: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
-
   @UpdateDateColumn()
   updatedAt: Date;
 }

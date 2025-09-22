@@ -12,7 +12,7 @@ export class PermissionsGuard implements CanActivate {
     );
 
     if (!requiredPermissions) {
-      return true; // No permissions required
+      return true; 
     }
 
     const { user } = context.switchToHttp().getRequest();

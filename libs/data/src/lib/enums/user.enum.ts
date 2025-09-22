@@ -1,19 +1,19 @@
 export enum UserRole {
-  OWNER = 'owner',
-  ADMIN = 'admin',
-  VIEWER = 'viewer',
+  OWNER = 'OWNER',
+  ADMIN = 'ADMIN',
+  VIEWER = 'VIEWER',
 }
 
 export enum Permission {
-  CREATE_TASK = 'create_task',
-  EDIT_TASK = 'edit_task',
-  DELETE_TASK = 'delete_task',
-  VIEW_TASK = 'view_task',
+  CREATE_TASK = 'CREATE_TASK',
+  EDIT_TASK = 'EDIT_TASK',
+  DELETE_TASK = 'DELETE_TASK',
+  VIEW_TASK = 'VIEW_TASK',
 
-  MANAGE_USERS = 'manage_users',
-  VIEW_AUDIT_LOG = 'view_audit_log',
+  MANAGE_USERS = 'MANAGE_USERS',
+  VIEW_AUDIT_LOG = 'VIEW_AUDIT_LOG',
 
-  ADMIN_ACCESS = 'admin_access',
+  ADMIN_ACCESS = 'ADMIN_ACCESS',
 }
 
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {

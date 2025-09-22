@@ -1,0 +1,27 @@
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import {
+    AuthenticatedUserDto,
+    ROLE_PERMISSIONS,
+    User,
+} from '@task-mgmt-sys/data';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: 'YOUR_SECRET_KEY',
+    });
+  }
+
+  async validate(payload: User): Promise<AuthenticatedUserDto> {
+    return {
+      ...payload,
+      permissions:
+        ROLE_PERMISSIONS[payload.role as keyof typeof ROLE_PERMISSIONS] || [],
+    };
+  }
+}

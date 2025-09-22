@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TaskEntity } from './db/entities/task.entity';
+import { ApiAuthModule } from '@task-mgmt-sys/api-auth';
+import { UserController } from './controllers/user.controller';
+import { UserEntity } from './db/entities/user.entity';
+import { UserService } from './services/user.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'database.sqlite',
-      entities: [TaskEntity],
+      database: 'db/database.sqlite',
+      entities: [UserEntity],
       synchronize: true,
-      // migrations: [__dirname + '/../db/migrations/**/*{.ts,.js}'],
     }),
+    TypeOrmModule.forFeature([UserEntity]),
+    ApiAuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [UserController],
+  providers: [UserService],
 })
 export class AppModule {}

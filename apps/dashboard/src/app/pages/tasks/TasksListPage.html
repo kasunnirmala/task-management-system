@@ -1,0 +1,42 @@
+<div class="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+    <mat-grid-list cols="4" spacing="20px" rowHeight="2:1">
+
+        @for (task of allTasks; track task.id) {
+
+        <mat-card appearance="outlined" class="task-card my-10">
+            <mat-card-header>
+                <mat-card-title><span [ngClass]="{'completed-linethrough': task.isCompleted}">{{ task.title
+                        }}</span></mat-card-title>
+                <mat-card-subtitle><span [ngClass]="{'completed-linethrough': task.isCompleted}">{{ task.category
+                        }}</span></mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p [ngClass]="{'completed-linethrough': task.isCompleted}">{{ task.description }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                @if (completedButtonStatus(task)) {
+                <button type="button" (click)="completeTask(task)"
+                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">COMPLETE</button>
+
+                }
+                @if (deleteButtonStatus(task)) {
+                <button type="button"
+                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">DELETE</button>
+
+                }
+                @if (editButtonStatus(task)) {
+                <button type="button"
+                    class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">EDIT</button>
+
+                }
+            </mat-card-actions>
+        </mat-card>
+
+
+        } @empty {
+        <div>No items to display.</div>
+
+        }
+    </mat-grid-list>
+
+</div>

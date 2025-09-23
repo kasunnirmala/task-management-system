@@ -1,0 +1,7 @@
+.completed-linethrough {
+  text-decoration: line-through;
+}
+
+.task-card {
+  width: 30%;
+}

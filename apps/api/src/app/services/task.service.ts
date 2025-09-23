@@ -87,7 +87,7 @@ export class TaskService {
   async completeTask(completeTaskDto: CompleteTaskDto) {
     return this.taskRepository.update(completeTaskDto.taskId, {
       isCompleted: completeTaskDto.isCompleted,
-      completedAt: completeTaskDto.isCompleted ? new Date() : null,
+      completedAt: new Date(),
     });
   }
 }

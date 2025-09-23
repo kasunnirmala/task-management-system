@@ -1,19 +1,21 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Req,
-    UseGuards,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard, PermissionsGuard } from '@task-mgmt-sys/api-auth';
 import {
-    CompleteTaskDto,
-    CreateTaskDto,
-    ROLE_PERMISSIONS,
-    TaskDto,
-    UserRole,
+  CompleteTaskDto,
+  CreateTaskDto,
+  GetTaskByAssignDto,
+  GetTaskByOrgDto,
+  ROLE_PERMISSIONS,
+  TaskDto,
+  UserRole,
 } from '@task-mgmt-sys/data';
 import { Permissions } from '../decorators/permissions.decorator';
 import { TaskService } from '../services/task.service';
@@ -39,17 +41,19 @@ export class TaskController {
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions(...ROLE_PERMISSIONS[UserRole.ADMIN])
   @Post('assigned')
-  getTaskByAssignedUser(@Body('userId') userId: number): Promise<TaskDto[]> {
-    return this.taskService.findByAssignedUser(userId);
+  getTaskByAssignedUser(
+    @Body() getTaskByAssignDto: GetTaskByAssignDto
+  ): Promise<TaskDto[]> {
+    return this.taskService.findByAssignedUser(getTaskByAssignDto.userId);
   }
 
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions(...ROLE_PERMISSIONS[UserRole.ADMIN])
   @Post('org')
   getTaskByOrganization(
-    @Body('organizationId') organizationId: number
+    @Body() getTaskByOrgDto: GetTaskByOrgDto
   ): Promise<TaskDto[]> {
-    return this.taskService.findByOrganization(organizationId);
+    return this.taskService.findByOrganization(getTaskByOrgDto.organizationId);
   }
 
   @UseGuards(JwtAuthGuard, PermissionsGuard)
@@ -60,6 +64,7 @@ export class TaskController {
     createTaskDto.organization = req.user.organizationId;
     return this.taskService.createTask(createTaskDto);
   }
+
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions(...ROLE_PERMISSIONS[UserRole.ADMIN])
   @Post('complete')

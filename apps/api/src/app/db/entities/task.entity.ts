@@ -3,9 +3,9 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm';
 import { OrganizationEntity } from './organization.entity';
 import { UserEntity } from './user.entity';
@@ -27,18 +27,18 @@ export class TaskEntity {
   @Column()
   isCompleted: boolean;
 
-  @Column()
+  @CreateDateColumn()
   completedAt?: Date;
 
-  @OneToOne(() => OrganizationEntity)
+  @ManyToOne(() => OrganizationEntity)
   @JoinColumn()
   organization?: OrganizationEntity;
 
-  @OneToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity)
   @JoinColumn()
   assignedTo: UserEntity;
 
-  @OneToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity)
   @JoinColumn()
   createdBy: UserEntity;
 
